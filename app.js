@@ -1,31 +1,20 @@
 const express = require('express');
 const mysql = require('mysql');
+const db = require('./db');
 
 let app = express();
 
-let connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '6666',
-    database: "sys"
-});
-
-connection.connect(err => {
-    if (err)
-        throw err;
-    console.log('we are connected');
-
-    connection.query('SELECT * FROM employees', (err, result) => {
-        if (err)
-            throw err;
-            console.log(result);
-    })
-})
-
 app.get('/', function (req, res) {
-    console.warn(33333);
-})
+    let cb = (data) => {
+        console.warn(data);
+        res.send(data);
+    };
+
+    db.connect(db.MODE_TEST, () => {
+        db.getAll(cb);
+    })
+});
 
 app.listen(3003, function () {
   console.log('Example app listening on port 3003!')
-})
+});
