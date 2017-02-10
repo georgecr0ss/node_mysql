@@ -5,8 +5,10 @@ const db = require('./db');
 let app = express();
 
 app.get('/', function (req, res) {
-    let cb = (data) => {
-        console.warn(data);
+    let cb = (err, data) => {
+        if (err)
+            console.log(err);
+
         res.send(data);
     };
 

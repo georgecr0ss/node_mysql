@@ -49,12 +49,12 @@ let getAll = (cb) => {
     return done(new Error('Missing database connection.'));
   }
 
-  pool.query(`SELECT user.firstName, user.lastName, addresses.country, addresses.city
+  pool.query(`SELECT user.firstName, user.lastName, addresses.country, addresses.city, addresses.street
               FROM test.user
               inner join test.addresses
-              on user.user_id = addresses.user_id`, (err, res) => {
-                // console.log(res);
-                cb(res);
+              on user.user_id = addresses.user_id
+              WHERE addresses.country='France'`, (err, res) => {
+                cb(err, res);
               })
 };
 
